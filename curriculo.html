@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificados | Cristiano Alves</title>
+    <title>Currículo | Cristiano Alves</title>
     
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -27,48 +26,10 @@
             font-family: 'Outfit', sans-serif; 
             background-color: var(--bg); 
             color: var(--text);
-            padding: 120px 20px 80px; /* Aumentado padding superior para a navbar */
-            text-align: center; 
+            padding: 120px 20px 80px;
             overflow-x: hidden;
             position: relative;
-        }
-
-        /* --- NAVBAR --- */
-        .navbar {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--nav-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            padding: 12px 25px;
-            border-radius: 50px;
-            display: flex;
-            gap: 20px;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .nav-link {
-            color: var(--text);
-            font-size: 1.2rem;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-
-        .nav-link:hover {
-            color: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        .nav-link.home {
-            color: var(--accent2);
-            border-right: 1px solid var(--border);
-            padding-right: 15px;
+            line-height: 1.6;
         }
 
         /* --- BACKGROUND ANIMADO --- */
@@ -107,97 +68,213 @@
             100% { transform: translate(30px, 20px) scale(1.1); }
         }
 
-        h1 { 
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            margin-bottom: 60px; 
-            letter-spacing: -1px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .container { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
+        .nav-link {
+            color: var(--text);
+            font-size: 1.2rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* --- HEADER COM FOTO --- */
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .github-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            background: var(--bg);
+            padding: 3px;
+            transition: 0.5s ease;
+        }
+
+        .github-photo:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 0 30px rgba(123, 92, 250, 0.5);
+            border-color: var(--accent2);
+        }
+
+        /* --- CONTEÚDO DO CURRÍCULO --- */
+        .cv-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--surface);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: left;
             position: relative;
             z-index: 1;
         }
 
-        /* --- CARDS --- */
-        .flip-card { width: 280px; height: 180px; perspective: 1000px; cursor: pointer; margin: 0 auto; }
-        .flip-card-inner { 
-            position: relative; 
-            width: 100%; 
-            height: 100%; 
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
-            transform-style: preserve-3d; 
-            border-radius: 20px; 
-        }
-        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
-
-        .front, .back { 
-            position: absolute; 
-            width: 100%; 
-            height: 100%; 
-            backface-visibility: hidden; 
-            border-radius: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 24px; 
-            border: 1px solid var(--border);
-            backdrop-filter: blur(10px);
+        header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 40px;
+            margin-bottom: 40px;
         }
 
-        .front { background: var(--surface); color: var(--text); }
-        
-        .front h3 { 
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.15rem; 
-            margin-bottom: 8px; 
-            color: var(--accent); 
-            font-weight: 700;
-        }
-        
-        .front p { 
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem; 
-            color: var(--muted); 
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            margin-bottom: 10px;
         }
 
-        .back { 
-            background: linear-gradient(135deg, var(--accent), var(--accent2)); 
-            color: white; 
-            transform: rotateY(180deg); 
-            border: none;
-        }
-        
-        .back span { 
+        .subtitle {
             font-family: 'Space Mono', monospace;
-            border: 2px solid #fff; 
-            padding: 8px 18px; 
-            border-radius: 10px; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            font-size: 0.75rem;
+            color: var(--accent);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-        
-        a { text-decoration: none; }
+
+        section { margin-bottom: 45px; }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            color: var(--text);
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+
+        .exp-item { margin-bottom: 30px; }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent2);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            color: var(--muted);
+        }
+
+        li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-pill {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .skill-pill:hover {
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .cert-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cert-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .cv-container { padding: 30px; }
+            .profile-header { flex-direction: column-reverse; text-align: center; }
+            .exp-header { flex-direction: column; gap: 5px; }
+        }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <a href="https://alvenato.github.io/Alvenato/" class="nav-link home" title="Home">
+        <a href="https://alvenato.github.io/Alvenato/" class="nav-link" title="Home">
             <i class="fa-solid fa-house"></i>
         </a>
         <a href="https://github.com/Alvenato" target="_blank" class="nav-link" title="GitHub">
@@ -206,10 +283,10 @@
         <a href="https://www.linkedin.com/in/cristianoalvesbarbosa/" target="_blank" class="nav-link" title="LinkedIn">
             <i class="fa-brands fa-linkedin"></i>
         </a>
-        <a href="https://wa.me/5561999999999" target="_blank" class="nav-link" title="WhatsApp">
+        <a href="https://wa.me/5561981830780" target="_blank" class="nav-link" title="WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
-        <a href="mailto:seuemail@exemplo.com" class="nav-link" title="E-mail">
+        <a href="mailto:analytics.barbosa@gmail.com" class="nav-link" title="E-mail">
             <i class="fa-solid fa-envelope"></i>
         </a>
     </nav>
@@ -217,139 +294,85 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
 
-    <h1>Meus Certificados</h1>
-    
-    <div class="container">
-        
-        <div class="flip-card">
-            <a href="Americanas - Certificado - 5S.jpg" data-lightbox="galeria" data-title="Treinamento 5S">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Treinamento 5S</h3><p>Americanas (OCP)</p></div>
-                    <div class="back"><span>Visualizar</span></div>
+    <div class="cv-container">
+        <header>
+            <div class="profile-header">
+                <div>
+                    <h1>Cristiano A. Barbosa</h1>
+                    <p class="subtitle">Data Science & AI Student</p>
                 </div>
-            </a>
-        </div>
+                <img src="https://github.com/Alvenato.png" alt="Cristiano Barbosa" class="github-photo">
+            </div>
+        </header>
 
-        <div class="flip-card">
-            <a href="Americanas - Certificado - A Estratégia Por Trás da Comunicação Visual.jpg" data-lightbox="galeria" data-title="Comunicação Visual">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Comunicação Visual</h3><p>Universo Americanas</p></div>
-                    <div class="back"><span>Visualizar</span></div>
+        <section>
+            <h2>Objetivo</h2>
+            <p style="color: var(--muted);">
+                Graduando em Ciência de Dados, focado em <strong>Python, SQL e Machine Learning</strong>. 
+                Buscando transformar grandes volumes de dados em insights estratégicos e soluções inteligentes para o negócio.
+            </p>
+        </section>
+
+        <section>
+            <h2>Experiência</h2>
+            
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span>IEL - Instituto Euvaldo Lodi</span>
+                    <span>2024 - Atual</span>
                 </div>
-            </a>
-        </div>
+                <div class="job-title">Analista Freelancer de Cobranças e BI</div>
+                <ul>
+                    <li>Desenvolvimento de dashboards estratégicos em Power BI.</li>
+                    <li>Otimização de processos e automação de fluxos administrativos.</li>
+                </ul>
+            </div>
 
-        <div class="flip-card">
-            <a href="Americanas - Certificado - Alto Impacto.jpg" data-lightbox="galeria" data-title="Apresentação de Alto Impacto">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Alto Impacto</h3><p>Universo Americanas</p></div>
-                    <div class="back"><span>Visualizar</span></div>
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span>Americanas S.A.</span>
+                    <span>2022 - 2023</span>
                 </div>
-            </a>
-        </div>
+                <div class="job-title">Analista de Operações - PL</div>
+                <ul>
+                    <li>Gestão de KPIs de Last Mile e performance logística.</li>
+                    <li>Aplicação de metodologias Lean Six Sigma (Yellow Belt) e PDCA.</li>
+                </ul>
+            </div>
+        </section>
 
-        <div class="flip-card">
-            <a href="Americanas - Certificado - Anticorrupção.jpg" data-lightbox="galeria" data-title="Anticorrupção">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Anticorrupção</h3><p>Americanas S.A.</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
+        <section>
+            <h2>Tecnologias</h2>
+            <div class="skills-container">
+                <span class="skill-pill">Python</span>
+                <span class="skill-pill">SQL</span>
+                <span class="skill-pill">Power BI</span>
+                <span class="skill-pill">Excel Avançado</span>
+                <span class="skill-pill">Machine Learning</span>
+                <span class="skill-pill">Lean Six Sigma</span>
+            </div>
+        </section>
 
-        <div class="flip-card">
-            <a href="Americanas - Certificado - Comunicação não violenta.jpg" data-lightbox="galeria" data-title="Comunicação Não Violenta">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Comunicação Não Violenta</h3><p>Universo Americanas</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
+        <section>
+            <h2>Educação</h2>
+            <div class="exp-item">
+                <div class="exp-header">IESB</div>
+                <div class="job-title">Ciência de Dados e IA (Graduação) | 2025</div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-header">Descomplica</div>
+                <div class="job-title">Análise de Dados (Pós-graduação)</div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-header">Estácio de Sá</div>
+                <div class="job-title">Sistemas de Informação (Bacharelado)</div>
+            </div>
+        </section>
 
-        <div class="flip-card">
-            <a href="Americanas - Certificado - Credenciamento de Líderes.jpg" data-lightbox="galeria" data-title="Credenciamento de Líderes">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Credenciamento Líderes</h3><p>Universo Americanas</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
+        <div style="text-align: center;">
+            <a href="https://www.flipsnack.com/A9D5BD5EFB5/certificados-barbosa" target="_blank" class="cert-btn">Certificados</a>
         </div>
-
-        <div class="flip-card">
-            <a href="Americanas - Certificado - Desafios da Primeira Liderança.jpg" data-lightbox="galeria" data-title="Primeira Liderança">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Primeira Liderança</h3><p>Universo Americanas</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="flip-card">
-            <a href="Americanas - Certificado - LGPD.jpg" data-lightbox="galeria" data-title="LGPD">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>LGPD</h3><p>Universo Americanas</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="flip-card">
-            <a href="Certificado - Aplicação Java Mobile.jpg" data-lightbox="galeria" data-title="Java Mobile">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Java Mobile</h3><p>Desenvolvimento</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="flip-card">
-            <a href="Certificado - Fundamentos do ITIL.jpg" data-lightbox="galeria" data-title="ITIL Fundamentos">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>ITIL Fundamentos</h3><p>Gestão de TI</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="flip-card">
-            <a href="Certificado - Microsoft Windows Server 2003.jpg" data-lightbox="galeria" data-title="Windows Server 2003">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Windows Server 2003</h3><p>Infraestrutura</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="flip-card">
-            <a href="Certificado - Minicurso SQL para dados de navegação.jpg" data-lightbox="galeria" data-title="SQL Dados Navegação">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>SQL Dados Navegação</h3><p>Banco de Dados</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="flip-card">
-            <a href="Certificado - Modelagem De Dados.jpg" data-lightbox="galeria" data-title="Modelagem De Dados">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Modelagem De Dados</h3><p>Arquitetura de Dados</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
-
-        <div class="flip-card">
-            <a href="Certificado - Programação em C#.jpg" data-lightbox="galeria" data-title="Programação C#">
-                <div class="flip-card-inner">
-                    <div class="front"><h3>Programação C#</h3><p>Desenvolvimento</p></div>
-                    <div class="back"><span>Visualizar</span></div>
-                </div>
-            </a>
-        </div>
-
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
 </body>
 </html>
