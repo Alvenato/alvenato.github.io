@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currículo | Cristiano Alves</title>
+    <title>Currículo | Cristiano A. Barbosa</title>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
@@ -63,11 +63,6 @@
         .orb-1 { width: 400px; height: 400px; background: var(--accent); top: -100px; left: -100px; }
         .orb-2 { width: 350px; height: 350px; background: var(--accent2); bottom: -80px; right: -80px; }
 
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 20px) scale(1.1); }
-        }
-
         /* --- NAVBAR --- */
         .navbar {
             position: fixed;
@@ -100,32 +95,7 @@
             transform: translateY(-3px);
         }
 
-        /* --- HEADER COM FOTO --- */
-        .profile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .github-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 20px;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-            background: var(--bg);
-            padding: 3px;
-            transition: 0.5s ease;
-        }
-
-        .github-photo:hover {
-            transform: scale(1.05) rotate(3deg);
-            box-shadow: 0 0 30px rgba(123, 92, 250, 0.5);
-            border-color: var(--accent2);
-        }
-
-        /* --- CONTEÚDO DO CURRÍCULO --- */
+        /* --- CONTAINER DO CV --- */
         .cv-container {
             max-width: 900px;
             margin: 0 auto;
@@ -145,6 +115,23 @@
             margin-bottom: 40px;
         }
 
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .github-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 20px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            background: var(--bg);
+            padding: 3px;
+        }
+
         h1 {
             font-family: 'Syne', sans-serif;
             font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -161,6 +148,14 @@
             color: var(--accent);
             font-size: 1rem;
             letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .address {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 8px;
             text-transform: uppercase;
         }
 
@@ -201,10 +196,7 @@
             margin-bottom: 15px;
         }
 
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
+        ul { list-style: none; padding-left: 0; }
 
         li {
             position: relative;
@@ -221,28 +213,6 @@
             font-family: 'Space Mono', monospace;
         }
 
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .skill-pill {
-            background: rgba(0, 212, 255, 0.05);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.8rem;
-            transition: 0.3s;
-        }
-
-        .skill-pill:hover {
-            border-color: var(--accent);
-            background: rgba(0, 212, 255, 0.1);
-        }
-
         .cert-btn {
             display: inline-block;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -252,43 +222,28 @@
             text-decoration: none;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
             margin-top: 20px;
             transition: 0.3s;
-            border: none;
-            cursor: pointer;
         }
 
-        .cert-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-        }
+        .cert-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
 
         @media (max-width: 768px) {
             .cv-container { padding: 30px; }
             .profile-header { flex-direction: column-reverse; text-align: center; }
-            .exp-header { flex-direction: column; gap: 5px; }
+            .exp-header { flex-direction: column; }
+            .github-photo { width: 120px; height: 120px; }
         }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <a href="https://alvenato.github.io/Alvenato/" class="nav-link" title="Home">
-            <i class="fa-solid fa-house"></i>
-        </a>
-        <a href="https://github.com/Alvenato" target="_blank" class="nav-link" title="GitHub">
-            <i class="fa-brands fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/cristianoalvesbarbosa/" target="_blank" class="nav-link" title="LinkedIn">
-            <i class="fa-brands fa-linkedin"></i>
-        </a>
-        <a href="https://wa.me/5561981830780" target="_blank" class="nav-link" title="WhatsApp">
-            <i class="fa-brands fa-whatsapp"></i>
-        </a>
-        <a href="mailto:analytics.barbosa@gmail.com" class="nav-link" title="E-mail">
-            <i class="fa-solid fa-envelope"></i>
-        </a>
+        <a href="https://alvenato.github.io/Alvenato/" class="nav-link"><i class="fa-solid fa-house"></i></a>
+        <a href="https://github.com/Alvenato" target="_blank" class="nav-link"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/cristianoalves-ca" target="_blank" class="nav-link"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://wa.me/5561981830780" target="_blank" class="nav-link"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="mailto:analytics.barbosa@gmail.com" class="nav-link"><i class="fa-solid fa-envelope"></i></a>
     </nav>
 
     <div class="orb orb-1"></div>
@@ -299,57 +254,85 @@
             <div class="profile-header">
                 <div>
                     <h1>Cristiano A. Barbosa</h1>
-                    <p class="subtitle">Data Science & AI Student</p>
+                    <p class="subtitle">Ciência de Dados e IA</p>
+                    <p class="address">
+                        <i class="fa-solid fa-location-dot" style="margin-right: 5px; color: var(--accent);"></i>
+                        Condomínio Varandas Garden, Valparaíso de Goiás - GO
+                    </p>
                 </div>
                 <img src="https://github.com/Alvenato.png" alt="Cristiano Barbosa" class="github-photo">
             </div>
         </header>
 
         <section>
-            <h2>Objetivo</h2>
-            <p style="color: var(--muted);">
-                Graduando em Ciência de Dados, focado em <strong>Python, SQL e Machine Learning</strong>. 
-                Buscando transformar grandes volumes de dados em insights estratégicos e soluções inteligentes para o negócio.
-            </p>
-        </section>
-
-        <section>
-            <h2>Experiência</h2>
+            <h2>Experiência Profissional</h2>
+            
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span>Trix - Tecnologia Inteligente</span>
+                    <span>2026 - Atual</span>
+                </div>
+                <div class="job-title">Estágio em Análise de Dados</div>
+                <ul>
+                    <li>Extração e Processamento de Dados (ETL): Auxiliar na coleta de dados de diferentes fontes (APIs, bancos de dados SQL, planilhas) e na limpeza das informações para garantir que estejam prontas para análise.</li>
+                    <li>Criação de Dashboards: Desenvolver e manter painéis de indicadores (KPIs) em ferramentas como o Power BI e Tableau Server, facilitando a visualização de métricas de desempenho para os gestores.</li>
+                    <li>Monitoramento de Processos: Monitorar o fluxo de dados entre os sistemas da Trix e seus clientes (como operadores da área da saúde), identificando erros ou inconsistências técnicas.</li>
+                </ul>
+            </div>
             
             <div class="exp-item">
                 <div class="exp-header">
                     <span>IEL - Instituto Euvaldo Lodi</span>
-                    <span>2024 - Atual</span>
+                    <span>2024 - 2025</span>
                 </div>
-                <div class="job-title">Analista Freelancer de Cobranças e BI</div>
+                <div class="job-title">Analista Freelancer de Cobranças e BI (PJ)</div>
                 <ul>
-                    <li>Desenvolvimento de dashboards estratégicos em Power BI.</li>
-                    <li>Otimização de processos e automação de fluxos administrativos.</li>
+                    <li>Gestão de Recebíveis: Monitoramento de contas a pagar e faturar, atuando diretamente na redução da inadimplência.</li>
+                    <li>Administração Documental: Elaboração e gestão de aditivos e contratos mensais, garantindo a organização documental.</li>
+                    <li>Fluxos Digitais: Implementação e acompanhamento de assinaturas digitais via DocuSign para agilizar processos.</li>
+                    <li>Apoio à Decisão: Suporte analítico e operacional para a diretoria financeira através de relatórios e painéis.</li>
+                </ul>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span>Kandango Transportes e Turismo LTDA</span>
+                    <span>2024 - 2024</span>
+                </div>
+                <div class="job-title">Analista de Operações / Controle de Tráfego</div>
+                <ul>
+                    <li>Controle de Tráfego: Monitoramento em tempo real das operações de transporte, assegurando fluidez e segurança.</li>
+                    <li>Gestão de Emergências: Coordenação com órgãos externos (polícia e bombeiros) em casos de acidentes e incidentes.</li>
+                    <li>Melhoria de Rotas: Colaboração no desenvolvimento de propostas para otimização da infraestrutura e trajetos.</li>
+                    <li>Relatórios Gerenciais: Apoio no mapeamento de ocorrências para aprimoramento da logística.</li>
+                </ul>
+            </div>
+
+            <div class="exp-item">
+                <div class="exp-header">
+                    <span>Kandango Transportes e Turismo LTDA</span>
+                    <span>2023 - 2024</span>
+                </div>
+                <div class="job-title">Fiscal de Operações / Auxiliar de Controle</div>
+                <ul>
+                    <li>Gestão de Equipes: Ajuste e acompanhamento de escalas de motoristas para garantir a cobertura operacional.</li>
+                    <li>Conformidade ANTT: Fiscalização do cumprimento das normas regulatórias e da Lei do Motorista (13.103/15).</li>
+                    <li>Suporte à Campo: Atendimento aos canais de comunicação interna e auxílio direto na solução de problemas diários.</li>
                 </ul>
             </div>
 
             <div class="exp-item">
                 <div class="exp-header">
                     <span>Americanas S.A.</span>
-                    <span>2022 - 2023</span>
+                    <span>2021 - 2023</span>
                 </div>
                 <div class="job-title">Analista de Operações - PL</div>
                 <ul>
-                    <li>Gestão de KPIs de Last Mile e performance logística.</li>
-                    <li>Aplicação de metodologias Lean Six Sigma (Yellow Belt) e PDCA.</li>
+                    <li>Performance Logística: Acompanhamento diário de metas de Last Mile e prazos de entrega (SLA).</li>
+                    <li>Qualidade de Processos: Uso de ferramentas (PDCA, DMAIC, Pareto) no mapeamento de fluxos e correção de desvios.</li>
+                    <li>Gestão de Parceiros: Implantação de HUBs logísticos regionais e coordenação de parceiros de transporte.</li>
+                    <li>Eficiência Operacional: Gerenciamento da produtividade por turno, focando no cumprimento das metas da rede.</li>
                 </ul>
-            </div>
-        </section>
-
-        <section>
-            <h2>Tecnologias</h2>
-            <div class="skills-container">
-                <span class="skill-pill">Python</span>
-                <span class="skill-pill">SQL</span>
-                <span class="skill-pill">Power BI</span>
-                <span class="skill-pill">Excel Avançado</span>
-                <span class="skill-pill">Machine Learning</span>
-                <span class="skill-pill">Lean Six Sigma</span>
             </div>
         </section>
 
@@ -357,15 +340,15 @@
             <h2>Educação</h2>
             <div class="exp-item">
                 <div class="exp-header">IESB</div>
-                <div class="job-title">Ciência de Dados e IA (Graduação) | 2025</div>
+                <div class="job-title">Graduando em Ciência de Dados e IA | Início 2025</div>
             </div>
             <div class="exp-item">
                 <div class="exp-header">Descomplica</div>
-                <div class="job-title">Análise de Dados (Pós-graduação)</div>
+                <div class="job-title">Pós-graduação em Análise de Dados | 2022 - 2023</div>
             </div>
             <div class="exp-item">
                 <div class="exp-header">Estácio de Sá</div>
-                <div class="job-title">Sistemas de Informação (Bacharelado)</div>
+                <div class="job-title">Bacharelado em Sistemas de Informação | 2014 - 2018</div>
             </div>
         </section>
 
@@ -373,6 +356,5 @@
             <a href="https://alvenato.github.io/Certificados/" target="_blank" class="cert-btn">Certificados</a>
         </div>
     </div>
-
 </body>
 </html>
