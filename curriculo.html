@@ -20,6 +20,7 @@
             --nav-bg: rgba(5, 10, 15, 0.7);
         }
 
+        /* Configurações Gerais */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body { 
@@ -32,6 +33,7 @@
             line-height: 1.6;
         }
 
+        /* Fundo Animado */
         body::before {
             content: '';
             position: fixed; inset: 0;
@@ -55,6 +57,7 @@
         .orb-1 { width: 400px; height: 400px; background: var(--accent); top: -100px; left: -100px; }
         .orb-2 { width: 350px; height: 350px; background: var(--accent2); bottom: -80px; right: -80px; }
 
+        /* Navbar */
         .navbar {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
             background: var(--nav-bg); backdrop-filter: blur(12px); border: 1px solid var(--border);
@@ -65,6 +68,7 @@
         .nav-link { color: var(--text); font-size: 1.2rem; transition: 0.3s; text-decoration: none; }
         .nav-link:hover { color: var(--accent); transform: translateY(-3px); }
 
+        /* Container Principal */
         .cv-container {
             max-width: 900px; margin: 0 auto; background: var(--surface); backdrop-filter: blur(15px);
             border: 1px solid var(--border); border-radius: 24px; padding: 60px; z-index: 1;
@@ -90,6 +94,7 @@
 
         .address { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); margin-top: 8px; text-transform: uppercase; }
 
+        /* Seções */
         section { margin-bottom: 45px; }
 
         h2 {
@@ -107,6 +112,7 @@
         li { position: relative; padding-left: 20px; margin-bottom: 12px; color: var(--muted); }
         li::before { content: '>'; position: absolute; left: 0; color: var(--accent); font-family: 'Space Mono', monospace; }
 
+        /* Habilidades */
         .skills-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
         .skill-badge {
             font-family: 'Space Mono', monospace; font-size: 0.8rem; padding: 6px 14px;
@@ -115,6 +121,7 @@
         }
         .skill-badge:hover { background: rgba(0, 212, 255, 0.15); border-color: var(--accent); transform: translateY(-2px); }
 
+        /* Botões */
         .cert-btn {
             display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent2));
             color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none;
@@ -122,10 +129,72 @@
         }
         .cert-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
 
+        /* BOTÃO FLUTUANTE DE DOWNLOAD */
+        .float-download {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+            z-index: 2000;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .float-download:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(123, 92, 250, 0.5);
+        }
+
+        /* ESTILOS DE IMPRESSÃO (O que o PDF vai mostrar) */
+        @media print {
+            .float-download, .navbar, .orb, .cert-btn, body::before {
+                display: none !important;
+            }
+            body {
+                padding: 0;
+                background: white;
+                color: black;
+            }
+            .cv-container {
+                max-width: 100%;
+                margin: 0;
+                padding: 20px;
+                background: white;
+                border: none;
+                box-shadow: none;
+                color: black;
+            }
+            h1, .subtitle, .job-title, .exp-header, .skill-badge {
+                -webkit-text-fill-color: initial !important;
+                background: none !important;
+                color: #000 !important;
+                border: 1px solid #ddd !important;
+            }
+            .skill-badge { border: 1px solid #ccc !important; }
+            li { color: #333 !important; }
+            .address { color: #555 !important; }
+        }
+
+        /* Responsividade */
         @media (max-width: 768px) {
             .cv-container { padding: 30px; }
             .profile-header { flex-direction: column-reverse; text-align: center; }
             .exp-header { flex-direction: column; }
+            .float-download span { display: none; }
+            .float-download { padding: 15px; border-radius: 50%; }
         }
     </style>
 </head>
@@ -142,12 +211,17 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
 
+    <a href="javascript:window.print()" class="float-download">
+        <i class="fa-solid fa-file-pdf"></i>
+        <span>Download PDF</span>
+    </a>
+
     <div class="cv-container">
         <header>
             <div class="profile-header">
                 <div>
                     <h1>Cristiano A. Barbosa</h1>
-                    <p class="subtitle">Ciência de Dados e IA</p>
+                    <p class="subtitle">CIÊNCIA DE DADOS E IA</p>
                     <p class="address">
                         <i class="fa-solid fa-location-dot" style="margin-right: 5px; color: var(--accent);"></i>
                         Condomínio Varandas Garden, Valparaíso de Goiás - GO
@@ -167,9 +241,9 @@
                 </div>
                 <div class="job-title">Estágio em Análise de Dados</div>
                 <ul>
-                    <li>Extração e Processamento de Dados (ETL): Auxiliar na coleta de dados de diferentes fontes (APIs, bancos de dados SQL, planilhas) e na limpeza das informações para garantir que estejam prontas para análise.</li>
-                    <li>Criação de Dashboards: Desenvolver e manter painéis de indicadores (KPIs) em ferramentas como o Power BI e Tableau Server, facilitando a visualização de métricas de desempenho para os gestores.</li>
-                    <li>Monitoramento de Processos: Monitorar o fluxo de dados entre os sistemas da Trix e seus clientes (como operadores da área da saúde), identificando erros ou inconsistências técnicas.</li>
+                    <li>Extração e Processamento de Dados (ETL): Auxiliar na coleta de dados de diferentes fontes (APIs, SQL, planilhas).</li>
+                    <li>Criação de Dashboards: Desenvolver e manter painéis de indicadores (KPIs) em Power BI e Tableau Server.</li>
+                    <li>Monitoramento de Processos: Identificar erros ou inconsistências técnicas no fluxo de dados entre sistemas.</li>
                 </ul>
             </div>
             
@@ -180,37 +254,9 @@
                 </div>
                 <div class="job-title">Analista Freelancer de Cobranças e BI (PJ)</div>
                 <ul>
-                    <li>Gestão de Recebíveis: Monitoramento de contas a pagar e faturar, atuando diretamente na redução da inadimplência.</li>
-                    <li>Administração Documental: Elaboração e gestão de aditivos e contratos mensais, garantindo a organização documental.</li>
-                    <li>Fluxos Digitais: Implementação e acompanhamento de assinaturas digitais via DocuSign para agilizar processos.</li>
-                    <li>Apoio à Decisão: Suporte analítico e operacional para a diretoria financeira através de relatórios e painéis.</li>
-                </ul>
-            </div>
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <span>Kandango Transportes e Turismo LTDA</span>
-                    <span>2024 - 2024</span>
-                </div>
-                <div class="job-title">Analista de Operações / Controle de Tráfego</div>
-                <ul>
-                    <li>Controle de Tráfego: Monitoramento em tempo real das operações de transporte, assegurando fluidez e segurança.</li>
-                    <li>Gestão de Emergências: Coordenação com órgãos externos (polícia e bombeiros) em casos de acidentes e incidentes.</li>
-                    <li>Melhoria de Rotas: Colaboração no desenvolvimento de propostas para otimização da infraestrutura e trajetos.</li>
-                    <li>Relatórios Gerenciais: Apoio no mapeamento de ocorrências para aprimoramento da logística.</li>
-                </ul>
-            </div>
-
-            <div class="exp-item">
-                <div class="exp-header">
-                    <span>Kandango Transportes e Turismo LTDA</span>
-                    <span>2023 - 2024</span>
-                </div>
-                <div class="job-title">Fiscal de Operações / Auxiliar de Controle</div>
-                <ul>
-                    <li>Gestão de Equipes: Ajuste e acompanhamento de escalas de motoristas para garantir a cobertura operacional.</li>
-                    <li>Conformidade ANTT: Fiscalização do cumprimento das normas regulatórias e da Lei do Motorista (13.103/15).</li>
-                    <li>Suporte à Campo: Atendimento aos canais de comunicação interna e auxílio direto na solução de problemas diários.</li>
+                    <li>Gestão de Recebíveis: Monitoramento de contas e atuação direta na redução da inadimplência.</li>
+                    <li>Fluxos Digitais: Implementação e acompanhamento de assinaturas digitais via DocuSign.</li>
+                    <li>Apoio à Decisão: Suporte analítico para a diretoria financeira através de relatórios estratégicos.</li>
                 </ul>
             </div>
 
@@ -221,10 +267,9 @@
                 </div>
                 <div class="job-title">Analista de Operações - PL</div>
                 <ul>
-                    <li>Performance Logística: Acompanhamento diário de metas de Last Mile e prazos de entrega (SLA).</li>
-                    <li>Qualidade de Processos: Uso de ferramentas (PDCA, DMAIC, Pareto) no mapeamento de fluxos e correção de desvios.</li>
-                    <li>Gestão de Parceiros: Implantação de HUBs logísticos regionais e coordenação de parceiros de transporte.</li>
-                    <li>Eficiência Operacional: Gerenciamento da produtividade por turno, focando no cumprimento das metas da rede.</li>
+                    <li>Performance Logística: Acompanhamento de metas de Last Mile e prazos de entrega (SLA).</li>
+                    <li>Qualidade de Processos: Uso de ferramentas (PDCA, DMAIC, Pareto) no mapeamento de fluxos.</li>
+                    <li>Eficiência Operacional: Gerenciamento da produtividade por turno e coordenação de parceiros.</li>
                 </ul>
             </div>
         </section>
