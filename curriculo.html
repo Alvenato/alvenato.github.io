@@ -20,6 +20,7 @@
             --nav-bg: rgba(5, 10, 15, 0.7);
         }
 
+        /* Configurações Gerais */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body { 
@@ -32,7 +33,7 @@
             line-height: 1.6;
         }
 
-        /* Fundo com Grade Animada */
+        /* Fundo Animado */
         body::before {
             content: '';
             position: fixed; inset: 0;
@@ -74,6 +75,7 @@
         }
 
         header { border-bottom: 1px solid var(--border); padding-bottom: 40px; margin-bottom: 40px; }
+
         .profile-header { display: flex; justify-content: space-between; align-items: center; gap: 30px; }
 
         .github-photo {
@@ -89,8 +91,10 @@
         }
 
         .subtitle { font-family: 'Space Mono', monospace; color: var(--accent); font-size: 1rem; letter-spacing: 2px; text-transform: uppercase; }
+
         .address { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); margin-top: 8px; text-transform: uppercase; }
 
+        /* Seções */
         section { margin-bottom: 45px; }
 
         h2 {
@@ -108,6 +112,7 @@
         li { position: relative; padding-left: 20px; margin-bottom: 12px; color: var(--muted); }
         li::before { content: '>'; position: absolute; left: 0; color: var(--accent); font-family: 'Space Mono', monospace; }
 
+        /* Habilidades */
         .skills-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
         .skill-badge {
             font-family: 'Space Mono', monospace; font-size: 0.8rem; padding: 6px 14px;
@@ -116,11 +121,13 @@
         }
         .skill-badge:hover { background: rgba(0, 212, 255, 0.15); border-color: var(--accent); transform: translateY(-2px); }
 
+        /* Botões */
         .cert-btn {
             display: inline-block; background: linear-gradient(135deg, var(--accent), var(--accent2));
             color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none;
             font-weight: 800; text-transform: uppercase; margin-top: 20px; transition: 0.3s;
         }
+        .cert-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 212, 255, 0.4); }
 
         /* BOTÃO FLUTUANTE DE DOWNLOAD */
         .float-download {
@@ -134,7 +141,7 @@
             border-radius: 50px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             font-weight: 700;
             font-family: 'Space Mono', monospace;
             text-transform: uppercase;
@@ -151,19 +158,41 @@
             box-shadow: 0 15px 30px rgba(123, 92, 250, 0.5);
         }
 
-        /* Ajustes para Impressão */
+        /* ESTILOS DE IMPRESSÃO (O que o PDF vai mostrar) */
         @media print {
-            .float-download, .navbar, .orb, .cert-btn, body::before { display: none !important; }
-            body { padding: 0; background: white; color: black; }
-            .cv-container { max-width: 100%; padding: 20px; border: none; background: white; color: black; }
-            h1, .subtitle, .job-title, .exp-header, .skill-badge { color: #000 !important; background: none !important; -webkit-text-fill-color: initial !important; }
+            .float-download, .navbar, .orb, .cert-btn, body::before {
+                display: none !important;
+            }
+            body {
+                padding: 0;
+                background: white;
+                color: black;
+            }
+            .cv-container {
+                max-width: 100%;
+                margin: 0;
+                padding: 20px;
+                background: white;
+                border: none;
+                box-shadow: none;
+                color: black;
+            }
+            h1, .subtitle, .job-title, .exp-header, .skill-badge {
+                -webkit-text-fill-color: initial !important;
+                background: none !important;
+                color: #000 !important;
+                border: 1px solid #ddd !important;
+            }
             .skill-badge { border: 1px solid #ccc !important; }
             li { color: #333 !important; }
+            .address { color: #555 !important; }
         }
 
+        /* Responsividade */
         @media (max-width: 768px) {
             .cv-container { padding: 30px; }
             .profile-header { flex-direction: column-reverse; text-align: center; }
+            .exp-header { flex-direction: column; }
             .float-download span { display: none; }
             .float-download { padding: 15px; border-radius: 50%; }
         }
@@ -182,7 +211,7 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
 
-    <a href="currículo_cristiano_barbosa.pdf" download="Curriculo_Cristiano_Barbosa.pdf" class="float-download">
+    <a href="javascript:window.print()" class="float-download">
         <i class="fa-solid fa-file-pdf"></i>
         <span>Download PDF</span>
     </a>
@@ -212,9 +241,9 @@
                 </div>
                 <div class="job-title">Estágio em Análise de Dados</div>
                 <ul>
-                    <li>Extração e Processamento de Dados (ETL) em APIs e bancos SQL.</li>
-                    <li>Desenvolvimento de Dashboards em Power BI e Tableau Server.</li>
-                    <li>Monitoramento técnico de fluxos de dados entre sistemas.</li>
+                    <li>Extração e Processamento de Dados (ETL): Auxiliar na coleta de dados de diferentes fontes (APIs, SQL, planilhas).</li>
+                    <li>Criação de Dashboards: Desenvolver e manter painéis de indicadores (KPIs) em Power BI e Tableau Server.</li>
+                    <li>Monitoramento de Processos: Identificar erros ou inconsistências técnicas no fluxo de dados entre sistemas.</li>
                 </ul>
             </div>
             
@@ -225,8 +254,9 @@
                 </div>
                 <div class="job-title">Analista Freelancer de Cobranças e BI (PJ)</div>
                 <ul>
-                    <li>Gestão de recebíveis e suporte analítico para diretoria financeira.</li>
-                    <li>Otimização de fluxos digitais e assinaturas via DocuSign.</li>
+                    <li>Gestão de Recebíveis: Monitoramento de contas e atuação direta na redução da inadimplência.</li>
+                    <li>Fluxos Digitais: Implementação e acompanhamento de assinaturas digitais via DocuSign.</li>
+                    <li>Apoio à Decisão: Suporte analítico para a diretoria financeira através de relatórios estratégicos.</li>
                 </ul>
             </div>
 
@@ -237,8 +267,9 @@
                 </div>
                 <div class="job-title">Analista de Operações - PL</div>
                 <ul>
-                    <li>Gestão de performance logística Last Mile e prazos de SLA.</li>
-                    <li>Mapeamento de processos com PDCA, DMAIC e Pareto.</li>
+                    <li>Performance Logística: Acompanhamento de metas de Last Mile e prazos de entrega (SLA).</li>
+                    <li>Qualidade de Processos: Uso de ferramentas (PDCA, DMAIC, Pareto) no mapeamento de fluxos.</li>
+                    <li>Eficiência Operacional: Gerenciamento da produtividade por turno e coordenação de parceiros.</li>
                 </ul>
             </div>
         </section>
@@ -266,6 +297,10 @@
             <div class="exp-item">
                 <div class="exp-header">Descomplica</div>
                 <div class="job-title">Pós-graduação em Análise de Dados | 2022 - 2023</div>
+            </div>
+            <div class="exp-item">
+                <div class="exp-header">Estácio de Sá</div>
+                <div class="job-title">Bacharelado em Sistemas de Informação | 2014 - 2018</div>
             </div>
         </section>
 
