@@ -11,14 +11,15 @@
     <style>
         :root {
             --bg: #020508;
-            --surface: #0a1118;
+            --surface: rgba(10, 17, 24, 0.8);
             --accent: #00f2ff; 
-            --accent2: #7000ff; 
-            --accent3: #39ff14; 
-            --accent-orange: #ff8c00;
             --text: #e8f4fd;
             --muted: #5d7a8c;
-            --border: rgba(0, 242, 255, 0.2);
+            --border: rgba(255, 255, 255, 0.1);
+            --gray-light: #ffffff;
+            --gray-mid: #888888;
+            --gray-dark: #333333;
+            --graphite: #1a1a1a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-style: normal !important; }
@@ -26,242 +27,292 @@
         body { 
             font-family: 'Outfit', sans-serif; 
             background-color: var(--bg); color: var(--text);
-            padding: 40px 10px; overflow-x: hidden;
-            line-height: 1.5;
+            padding: 0; overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        body::before {
-            content: ''; position: fixed; inset: 0;
-            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 50px 50px;
-            pointer-events: none; z-index: -1; opacity: 0.1;
+        #network-canvas {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
         }
 
-        /* --- MENU --- */
+        /* --- MENU FLUTUANTE --- */
         .menu-container {
             position: fixed; bottom: 30px; right: 30px;
             display: flex; flex-direction: column-reverse;
             align-items: center; gap: 12px; z-index: 9999;
         }
-
         .menu-trigger {
-            width: 50px; height: 50px;
-            background: var(--surface); border: 1px solid var(--accent);
-            border-radius: 50%; color: var(--accent);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; cursor: pointer; transition: 0.4s;
+            width: 55px; height: 55px; background: var(--surface); border: 1px solid #fff; border-radius: 50%; 
+            color: #fff; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; backdrop-filter: blur(5px); transition: 0.3s; font-size: 1.2rem;
         }
-
         .menu-items {
             display: flex; flex-direction: column; gap: 10px;
             opacity: 0; visibility: hidden; transform: translateY(15px);
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
         .menu-container:hover .menu-items { opacity: 1; visibility: visible; transform: translateY(0); }
-
         .action-btn {
-            width: 45px; height: 45px; background: var(--bg);
-            border: 1.5px solid var(--text); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--accent); text-decoration: none; transition: 0.3s ease;
+            width: 48px; height: 48px; background: var(--surface); border: 1px solid rgba(255,255,255,0.3); 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            color: #fff; text-decoration: none; transition: 0.3s;
         }
+        .action-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.1); }
 
-        .action-btn:hover {
-            border-color: var(--accent);
-            background: rgba(0, 242, 255, 0.05);
-            transform: translateY(-2px);
-        }
-
-        /* --- LAYOUT CV --- */
-        .cv-wrapper {
-            max-width: 1300px; margin: 0 auto;
-            display: grid; grid-template-columns: 240px 1fr;
-            gap: 20px; position: relative;
-        }
-
-        .side-panel {
-            background: var(--surface); border: 1px solid var(--border); 
-            border-radius: 20px;
-            padding: 30px 15px; position: sticky; top: 40px; height: fit-content;
+        /* --- CONTEÚDO --- */
+        .blog-container { max-width: 800px; margin: 0 auto; padding: 80px 20px; }
+        .blog-header {
+            text-align: center; margin-bottom: 80px;
             display: flex; flex-direction: column; align-items: center;
         }
-
-        .avatar-wrapper { position: relative; width: 110px; height: 110px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
+        .avatar-wrapper {
+            position: relative; width: 110px; height: 110px; margin-bottom: 30px;
+            display: flex; align-items: center; justify-content: center;
+        }
         .avatar-ring { 
             position: absolute; width: 120px; height: 120px; border-radius: 50%; 
-            background: conic-gradient(var(--accent), var(--accent2), var(--accent-orange), var(--accent3), var(--accent)); 
+            background: conic-gradient(var(--gray-light), var(--gray-mid), var(--graphite), #000, var(--gray-light)); 
             animation: spin 6s linear infinite; filter: blur(3px); z-index: 0;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .avatar { position: relative; width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid var(--bg); z-index: 1; background: var(--bg); }
-        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-main { position: relative; width: 110px; height: 110px; border-radius: 50%; overflow: hidden; border: 3px solid var(--bg); z-index: 1; background: var(--bg); }
+        .avatar-main img { width: 100%; height: 100%; object-fit: cover; }
+        .blog-title { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; color: #fff; }
+        .blog-tagline { font-family: 'Space Mono', monospace; color: var(--accent); font-size: 0.9rem; letter-spacing: 2px; }
 
-        .name-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; color: #fff; text-align: center; line-height: 1; margin-top: 15px; }
-        .subtitle { font-family: 'Space Mono', monospace; color: var(--accent3); font-size: 0.7rem; margin-top: 10px; display: block; text-align: center; letter-spacing: 1px; }
-
-        .section-header {
-            font-family: 'Space Mono', monospace; font-size: 0.8rem;
-            color: var(--accent); text-transform: uppercase;
-            margin-bottom: 15px; border-bottom: 1px solid var(--border);
-            padding-bottom: 5px; display: flex; align-items: center; gap: 8px;
-            letter-spacing: 1px;
-        }
-
-        .main-panel { display: flex; flex-direction: column; gap: 20px; }
+        .post { margin-bottom: 80px; }
+        .post-title { font-family: 'Syne', sans-serif; font-size: 1.8rem; margin-bottom: 25px; color: #fff; text-transform: uppercase; }
+        .post-content { font-size: 1.1rem; color: var(--text); opacity: 0.85; font-weight: 300; }
+        .post-content b { color: var(--accent); }
         
-        .top-row {
-            display: grid; grid-template-columns: 0.8fr 1.2fr;
-            gap: 20px; align-items: stretch;
-        }
-
-        .content-card { 
-            background: var(--surface); border: 1px solid var(--border); 
-            border-radius: 20px;
-            padding: 25px; 
-        }
-
-        .exp-item { margin-bottom: 25px; padding-left: 20px; border-left: 2px solid var(--accent2); }
-        .exp-meta { font-family: 'Space Mono', monospace; display: flex; justify-content: space-between; font-weight: bold; font-size: 0.85rem; color: var(--accent3); }
-        .job-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; color: var(--text); margin: 6px 0; font-weight: 700; text-transform: uppercase; }
+        .feed-item { padding: 30px 0; border-bottom: 1px solid var(--border); }
+        .feed-item:last-child { border-bottom: none; }
         
-        .text-body { font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: var(--text); opacity: 0.9; font-weight: 300; line-height: 1.6; }
-        .list-item { font-family: 'Outfit', sans-serif; font-size: 0.95rem; list-style: none; margin-bottom: 4px; color: var(--muted); padding-left: 24px; position: relative; }
-        .list-item::before { content: ">> "; color: var(--accent); font-family: 'Space Mono', monospace; position: absolute; left: 0; }
-
-        .project-list { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
-
-        .project-link {
-            display: flex; align-items: center; gap: 12px;
-            text-decoration: none; color: var(--text);
-            font-family: 'Space Mono', monospace; font-size: 0.85rem;
-            transition: 0.3s; padding: 15px;
-            border: 1px solid var(--border); border-radius: 12px;
-            background: rgba(0, 242, 255, 0.02);
+        .feed-date { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: #ffffff; font-weight: 700; margin-bottom: 5px; }
+        
+        .company-name { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .job-role { font-family: 'Space Mono', monospace; font-size: 0.95rem; color: var(--accent); margin-bottom: 15px; }
+        
+        /* --- TIMELINE EDUCATION STYLE --- */
+        .timeline-wrapper {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 20px;
         }
-        .project-link:hover {
-            color: var(--accent3); background: rgba(57, 255, 20, 0.05);
-            border-color: var(--accent3); transform: translateX(5px);
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 2px;
+            height: 100%;
+            background: var(--border);
         }
-        .project-link i { color: var(--accent3); font-size: 1.2rem; }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 40px;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -35px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
 
-        @media (max-width: 1000px) {
-            .cv-wrapper { grid-template-columns: 1fr; }
-            .top-row { grid-template-columns: 1fr; }
-            .side-panel { position: relative; top: 0; }
+        .exp-list { list-style: none; }
+        .exp-list li { margin-bottom: 10px; position: relative; padding-left: 20px; font-size: 1rem; opacity: 0.85; font-weight: 300; }
+        .exp-list li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+        .exp-list b { color: #fff; font-weight: 600; }
+
+        .project-card {
+            display: block; text-decoration: none; color: inherit; padding: 20px;
+            margin: 15px 0; border-radius: 12px; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border); transition: 0.3s;
         }
+        .project-card:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.05); transform: translateX(10px); }
     </style>
 </head>
 <body>
+
+    <canvas id="network-canvas"></canvas>
 
     <div class="menu-container">
         <div class="menu-trigger"><i class="fa-solid fa-bars-staggered"></i></div>
         <div class="menu-items">
             <a href="https://alvenato.github.io/Alvenato/" class="action-btn" title="Home"><i class="fa-solid fa-house"></i></a>
-            <a href="https://alvenato.github.io/curriculo_cristiano_barbosa.pdf" download class="action-btn" title="curriculo pdf"><i class="fa-solid fa-file-pdf"></i></a>
+            <a href="https://alvenato.github.io/curriculo_cristiano_barbosa.pdf" download class="action-btn" title="PDF"><i class="fa-solid fa-file-pdf"></i></a>
         </div>
     </div>
 
-    <div class="cv-wrapper">
-        <div class="side-panel">
+    <div class="blog-container">
+        <header class="blog-header">
             <div class="avatar-wrapper">
                 <div class="avatar-ring"></div>
-                <div class="avatar"><img src="https://github.com/Alvenato.png" alt="Cristiano A. Barbosa"></div>
-            </div>
-            <div class="name-title">Cristiano<br>A. Barbosa</div>
-            <span class="subtitle">// CIÊNCIA DE DADOS & IA</span>
-            <div style="margin-top: 30px; width: 100%; text-align: center;">
-                <div class="section-header"><i class="fa-solid fa-terminal"></i> STATUS_LOG</div>
-                <div style="font-family: 'Space Mono'; font-size: 0.75rem; color: var(--muted); text-align: left; padding-left: 10px;">
-                    LOC: <span style="color: var(--accent3);">VALPARAÍSO DE GOIÁS - GO</span><br>
-                    ROLE: <span style="color: var(--accent3);">ESTÁGIO</span>
+                <div class="avatar-main">
+                    <img src="https://github.com/Alvenato.png" alt="Cristiano A. Barbosa">
                 </div>
             </div>
-        </div>
+            <h1 class="blog-title">Cristiano A. Barbosa</h1>
+            <p class="blog-tagline">// DATA SCIENCE & IA STUDENT</p>
+        </header>
 
-        <div class="main-panel">
-            <div class="top-row">
-                <div class="content-card">
-                    <div class="section-header"><i class="fa-solid fa-user-astronaut"></i> EXECUTIVE_SUMMARY</div>
-                    <div class="text-body">
-                        Bacharel em Sistemas de Informação e pós-graduado em Análise de Dados, atualmente cursando Ciência de Dados e IA pelo IESB.
-                        <br><br>
-                        Focado no desenvolvimento de soluções analíticas, utilizando Python, SQL e ferramentas de visualização para transformar dados em insights estratégicos.
-                    </div>
-                </div>
+        <article class="post">
+            <h2 class="post-title">Professional Summary</h2>
+            <div class="post-content">
+                Estudante de <b>Ciência de Dados e Inteligência Artificial</b>, com formação em <b>Sistemas de Informação</b> e pós-graduação em <b>Análise de Dados</b>. Em desenvolvimento na área, com foco na aplicação de técnicas de análise de dados. Possuo conhecimentos em <b>Python, SQL</b> e ferramentas de visualização, aplicados em estudos e projetos práticos, com o objetivo de apoiar a resolução de problemas e a geração de insights.
+            </div>
+        </article>
 
-                <div class="content-card">
-                    <div class="section-header"><i class="fa-solid fa-database"></i> WORK_HISTORY</div>
-                    <div class="exp-item">
-                        <div class="exp-meta"><span>TRIX - TECNOLOGIA INTELIGENTE</span><span>2026 - PRESENTE</span></div>
-                        <div class="job-title">Estagiário em Análise de Dados</div>
-                        <div class="list-item">Extração e Processamento de Dados (ETL) via APIs, bancos SQL e planilhas.</div>
-                        <div class="list-item">Desenvolvimento e manutenção de painéis de indicadores (KPIs) no Power BI e Tableau Server.</div>
-                        <div class="list-item">Monitoramento de fluxos de dados e identificação de erros técnicos entre sistemas.</div>
-                    </div>
-                    <div class="exp-item">
-                        <div class="exp-meta"><span>IEL - INSTITUTO EUVALDO LODI</span><span>2024 - 2025</span></div>
-                        <div class="job-title">Analista Freelancer de Cobranças e BI (PJ)</div>
-                        <div class="list-item">Monitoramento de contas e atuação direta na redução da inadimplência.</div>
-                        <div class="list-item">Implementação de assinaturas digitais e fluxos automatizados via DocuSign.</div>
-                        <div class="list-item">Elaboração de relatórios analíticos e painéis para a diretoria financeira.</div>
-                    </div>
-                    <div class="exp-item">
-                        <div class="exp-meta"><span>KANDANGO TRANSPORTES</span><span>2023 - 2024</span></div>
-                        <div class="job-title">Analista de Operações / Controle de Tráfego</div>
-                        <div class="list-item">Monitoramento em tempo real das operações e gestão de emergências.</div>
-                        <div class="list-item">Coordenação com órgãos externos e otimização de rotas logísticas.</div>
-                        <div class="list-item">Mapeamento de ocorrências para aprimoramento da infraestrutura.</div>
-                    </div>
-                    <div class="exp-item">
-                        <div class="exp-meta"><span>AMERICANAS S.A.</span><span>2021 - 2023</span></div>
-                        <div class="job-title">Analista de Operações - PL</div>
-                        <div class="list-item">Acompanhamento de metas de Last Mile e prazos de entrega (SLA).</div>
-                        <div class="list-item">Melhoria contínua de processos com Lean Six Sigma, PDCA e DMAIC.</div>
-                        <div class="list-item">Implantação de HUBS logísticos e gerenciamento de performance regional.</div>
-                    </div>
-                </div>
+        <article class="post">
+            <h2 class="post-title">Experience</h2>
+            <div class="feed-item">
+                <div class="feed-date">2026 - PRESENTE</div>
+                <div class="company-name">Trix - Tecnologia Inteligente</div>
+                <div class="job-role">Estagiário em Análise de Dados</div>
+                <ul class="exp-list">
+                    <li><b>Extração e Processamento de Dados (ETL):</b> Auxílio na coleta e limpeza de dados de APIs, bancos de dados SQL e planilhas.</li>
+                    <li><b>Criação de Dashboards:</b> Desenvolvimento e manutenção de painéis de indicadores (KPIs) no Power BI e Tableau Server.</li>
+                    <li><b>Monitoramento de Processos:</b> Monitoramento do fluxo de dados e identificação de erros técnicos.</li>
+                </ul>
             </div>
 
-            <div class="content-card">
-                <div class="section-header"><i class="fa-solid fa-graduation-cap"></i> EDUCATION_LOG</div>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
-                    <div style="font-size: 0.95rem;">
-                        <b style="color: var(--accent); font-family: 'Syne';">IESB</b><br>Ciência de Dados e IA<br>
-                        <span style="color: var(--accent3); font-family: 'Space Mono';">2025 - PRESENTE</span>
-                    </div>
-                    <div style="font-size: 0.95rem;">
-                        <b style="color: var(--accent); font-family: 'Syne';">DESCOMPLICA</b><br>Pós em Análise de Dados<br>
-                        <span style="color: var(--muted); font-family: 'Space Mono';">2022 - 2023</span>
-                    </div>
-                    <div style="font-size: 0.95rem;">
-                        <b style="color: var(--accent); font-family: 'Syne';">ESTÁCIO DE SÁ</b><br>Sistemas de Informação<br>
-                        <span style="color: var(--muted); font-family: 'Space Mono';">2014 - 2018</span>
-                    </div>
-                </div>
+            <div class="feed-item">
+                <div class="feed-date">2024 - 2025</div>
+                <div class="company-name">IEL - Instituto Euvaldo Lodi</div>
+                <div class="job-role">Analista Freelancer de Cobranças e BI (PJ)</div>
+                <ul class="exp-list">
+                    <li><b>Gestão de Recebíveis:</b> Monitoramento de contas e atuação na redução da inadimplência.</li>
+                    <li><b>Administração Documental:</b> Gestão de contratos e aditivos mensais.</li>
+                    <li><b>Fluxos Digitais:</b> Implementação de assinaturas digitais via DocuSign.</li>
+                    <li><b>Apoio à Decisão:</b> Elaboração de relatórios analíticos e painéis para a diretoria financeira.</li>
+                </ul>
             </div>
 
-            <div class="content-card">
-                <div class="section-header"><i class="fa-solid fa-certificate"></i> CERTIFICATIONS_LOG</div>
-                <div style="display: flex; flex-wrap: wrap; margin-top: 10px;">
-                    </div>
+            <div class="feed-item">
+                <div class="feed-date">2023 - 2024</div>
+                <div class="company-name">Kandango Transportes e Turismo LTDA</div>
+                <div class="job-role">Analista de Operações / Controle de Tráfego</div>
+                <ul class="exp-list">
+                    <li><b>Controle de Tráfego:</b> Monitoramento em tempo real das operações de transporte.</li>
+                    <li><b>Gestão de Emergências:</b> Coordenação com órgãos externos em casos de acidentes.</li>
+                    <li><b>Melhoria de Rotas:</b> Colaboração na otimização da infraestrutura e trajetos.</li>
+                    <li><b>Relatórios Gerenciais:</b> Mapeamento de ocorrências para aprimoramento logístico.</li>
+                </ul>
             </div>
 
-            <div class="content-card">
-                <div class="section-header"><i class="fa-solid fa-laptop-code"></i> RECENT_PROJECTS</div>
-                <div class="project-list">
-                    <a href="https://alvenato.github.io/Análise_descritiva_SUS.pdf" target="_blank" class="project-link">
-                        <i class="fa-solid fa-file-pdf"></i>
-                        <span>Análise descritiva Quantitativa: Procedimentos Ambulatoriais e Gastos do SUS (2024-2025)</span>
-                    </a>
-                    
-                    <a href="https://alvenato.github.io/Análise_descritiva_do_ENEM_2024.pdf" target="_blank" class="project-link">
-                        <i class="fa-solid fa-file-pdf"></i>
-                        <span>Análise descritiva: ENEM 2024</span>
-                    </a>
+            <div class="feed-item">
+                <div class="feed-date">2021 - 2023</div>
+                <div class="company-name">Americanas S.A.</div>
+                <div class="job-role">Analista de Operações - PL</div>
+                <ul class="exp-list">
+                    <li><b>Performance Logística:</b> Acompanhamento de metas de Last Mile e prazos de entrega (SLA).</li>
+                    <li><b>Qualidade de Processos:</b> Uso de ferramentas (PDCA, DMAIC, Pareto) no mapping de fluxos.</li>
+                    <li><b>Gestão de Parceiros:</b> Implantação de HUBs logísticos regionais e coordenação de transportadoras.</li>
+                    <li><b>Eficiência Operacional:</b> Gerenciamento da produtividade por turno.</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="post">
+            <h2 class="post-title">Education</h2>
+            <div class="timeline-wrapper">
+                <div class="timeline-item">
+                    <div class="feed-date">INÍCIO 2025</div>
+                    <div class="company-name">IESB</div>
+                    <div class="job-role">Graduando em Ciência de Dados e IA</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="feed-date">2022 - 2023</div>
+                    <div class="company-name">Descomplica</div>
+                    <div class="job-role">Pós-graduação em Análise de Dados</div>
+                </div>
+                <div class="timeline-item" style="padding-bottom: 0;">
+                    <div class="feed-date">2014 - 2018</div>
+                    <div class="company-name">Estácio</div>
+                    <div class="job-role">Graduado em Sistemas de Informação</div>
                 </div>
             </div>
-        </div>
+        </article>
+
+        <article class="post">
+            <h2 class="post-title">Projects</h2>
+            <a href="https://alvenato.github.io/Análise_descritiva_SUS.pdf" target="_blank" class="project-card">
+                <h3>Análise Descritiva Quantitativa: SUS (2024-2025)</h3>
+            </a>
+            <a href="https://alvenato.github.io/Análise_descritiva_do_ENEM_2024.pdf" target="_blank" class="project-card">
+                <h3>Análise Descritiva: ENEM 2024</h3>
+            </a>
+        </article>
     </div>
+
+    <script>
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if(this.x<0||this.x>canvas.width) this.vx*=-1;
+                if(this.y<0||this.y>canvas.height) this.vy*=-1;
+            }
+        }
+
+        function init() {
+            particles = [];
+            for(let i=0; i<80; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2);
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                ctx.fill();
+            });
+
+            for(let i=0; i<particles.length; i++) {
+                for(let j=i+1; j<particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let d = Math.sqrt(dx*dx + dy*dy);
+                    if(d < 160) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255,255,255,${0.2 * (1 - d/160)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+    </script>
 </body>
 </html>
